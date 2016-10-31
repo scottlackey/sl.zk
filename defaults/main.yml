@@ -1,0 +1,21 @@
+---
+log_level: WARN
+zookeeper_maxClientCnxns: 60
+zookeeper_client_port: 2181
+zookeeper_hosts: "{{ansible_fqdn}}:2181"
+wait_for_period: 180
+
+# Variables only for RedHat family
+download_dir: "/opt/zookeeper/"
+zookeeper_version: 3.4.9
+zookeeper_url: https://archive.apache.org/dist/zookeeper/zookeeper-{{zookeeper_version}}/zookeeper-{{zookeeper_version}}.tar.gz
+zookeeper_dir: /opt/zookeeper-{{zookeeper_version}}
+zookeeper_data_dir: /var/lib/zookeeper
+zookeeper_log_dir: /var/log/zookeeper
+
+os_zookeeper_conf_dir:
+  RedHat: "{{ zookeeper_dir }}/conf"
+  Debian: "/etc/zookeeper/conf"
+
+# Common
+zookeeper_conf_dir: "{{ os_zookeeper_conf_dir[ansible_os_family] }}"
